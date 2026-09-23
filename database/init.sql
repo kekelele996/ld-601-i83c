@@ -63,3 +63,13 @@ CREATE TABLE IF NOT EXISTS audit_log (
   target_id TEXT,
   created_at TEXT
 );
+
+CREATE TABLE IF NOT EXISTS flow_event (
+  id INTEGER PRIMARY KEY,
+  route_plan_id TEXT,
+  event_type TEXT,
+  ref_type TEXT,
+  ref_id TEXT,
+  detail TEXT,
+  created_at TEXT
+);

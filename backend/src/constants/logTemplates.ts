@@ -1,7 +1,37 @@
 export const LOG_TEMPLATES = {
-  UserProfile: ["UserProfile.create", "UserProfile.update", "UserProfile.status", "UserProfile.export"],
-  AccessibleFacility: ["AccessibleFacility.create", "AccessibleFacility.update", "AccessibleFacility.status", "AccessibleFacility.export"],
-  RoutePlan: ["RoutePlan.create", "RoutePlan.update", "RoutePlan.status", "RoutePlan.export"],
-  AssistanceRequest: ["AssistanceRequest.create", "AssistanceRequest.update", "AssistanceRequest.status", "AssistanceRequest.export"],
-  BarrierReport: ["BarrierReport.create", "BarrierReport.update", "BarrierReport.status", "BarrierReport.export"]
+  UserProfile: {
+    create: "UserProfile.create",
+    update: "UserProfile.update",
+    status: "UserProfile.status",
+    export: "UserProfile.export"
+  },
+  AccessibleFacility: {
+    create: "AccessibleFacility.create",
+    update: "AccessibleFacility.update",
+    status: "AccessibleFacility.status",
+    export: "AccessibleFacility.export"
+  },
+  RoutePlan: {
+    create: "RoutePlan.create",
+    update: "RoutePlan.update",
+    status: "RoutePlan.status",
+    export: "RoutePlan.export",
+    riskRecalculated: "RoutePlan.riskRecalculated"
+  },
+  AssistanceRequest: {
+    create: "AssistanceRequest.create",
+    update: "AssistanceRequest.update",
+    status: "AssistanceRequest.status",
+    export: "AssistanceRequest.export",
+    accept: "AssistanceRequest.accept",
+    acceptRejected: "AssistanceRequest.acceptRejected"
+  },
+  BarrierReport: {
+    create: "BarrierReport.create",
+    update: "BarrierReport.update",
+    status: "BarrierReport.status",
+    export: "BarrierReport.export",
+    review: "BarrierReport.review",
+    close: "BarrierReport.close"
+  }
 };

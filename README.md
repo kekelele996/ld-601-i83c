@@ -14,6 +14,14 @@ cp .env.example .env && docker compose up -d
 
 后端健康检查：<http://localhost:21101/health>
 
+## 障碍审核 → 路线风险 → 协助接单联动流程
+
+- 设施巡检员审核障碍工单：`POST /api/barrier-report/:id/review`，body `{"action":"VERIFY"}` 或 `{"action":"CLOSE"}`（大小写不敏感）。核实或关闭后，引用该设施的所有路线立即重算风险。
+- 风险规则：路线任一设施上存在未关闭（`verify_status != CLOSED`）的高优先级（`priority = HIGH`）障碍时，路线为 `HIGH`；全部关闭后恢复 `LOW`。
+- 协助接单：`POST /api/assistance-request/:id/accept`。路线高风险时待接单请求保留，但接单被拒绝并返回 `ROUTE_HAS_OPEN_BARRIER`（障碍尚未关闭）；障碍关闭后可正常接单。
+- 流程查询：`GET /api/route-plan/:id/flow` 返回路线当前风险、未关闭障碍和完整事件链（障碍审核 → 路线风险变更 → 协助接单/接单被拒）。
+- 幂等：重复提交相同审核结果或重复接单返回 `duplicated: true`，不会重复改变路线风险，也不会重复写入流程事件。
+
 
 ## 本地开发方式
 
@@ -57,6 +65,11 @@ backend/src/routes, controllers, services, models, repositories, middlewares, co
 - MobilityType: constants/MobilityType、types/MobilityType、constructors、logTemplates、errorMessages、筛选器、展示组件/控制器均有引用。
 - FacilityStatus: constants/FacilityStatus、types/FacilityStatus、constructors、logTemplates、errorMessages、筛选器、展示组件/控制器均有引用。
 - AssistanceStatus: constants/AssistanceStatus、types/AssistanceStatus、constructors、logTemplates、errorMessages、筛选器、展示组件/控制器均有引用。
+- VerifyStatus（PENDING/VERIFIED/CLOSED）: backend constants/VerifyStatus、frontend constants/VerifyStatus 与 types/VerifyStatus、BarrierReport 模型与 DTO、ReportsPage、statusText。
+- BarrierPriority（HIGH/MEDIUM/LOW）: backend constants/BarrierPriority、frontend constants/BarrierPriority 与 types/BarrierPriority、BarrierReportRepository 风险查询、ReportsPage、statusText。
+- RiskLevel（LOW/MEDIUM/HIGH）: backend constants/RiskLevel、RoutePlan 模型、RoutePlanService 重算逻辑、RouteRiskPanel、formatters.formatRisk。
+- ReviewAction（VERIFY/CLOSE）: backend constants/ReviewAction（含 REVIEW_TARGET_STATUS 映射）、frontend constants/ReviewAction、BarrierReportService.review、ReportsPage 审核按钮。
+- FlowEventType（BARRIER_REVIEWED/ROUTE_RISK_CHANGED/ASSISTANCE_ACCEPTED/ASSISTANCE_ACCEPT_REJECTED）: backend constants/FlowEventType、FlowEvent 模型与 FlowEventRepository、frontend constants/FlowEventType、TimelineList。
 
 ## 为什么会牵一发动全身
 

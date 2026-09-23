@@ -1,8 +1,17 @@
-import { useMemo, useState } from "react";
+import { useEffect } from "react";
+import { useAssistanceRequestStore } from "../stores/AssistanceRequestStore";
+import { useRoutePlanStore } from "../stores/RoutePlanStore";
 
-export function useAssistanceFlow<T>(rows: T[] = []) {
-  const [page, setPage] = useState(1);
-  const pageSize = 8;
-  const pageRows = useMemo(() => rows.slice((page - 1) * pageSize, page * pageSize), [rows, page]);
-  return { page, setPage, pageSize, pageRows, total: rows.length };
+export function useAssistanceFlow() {
+  const { rows: requests, feedback, load, accept } = useAssistanceRequestStore();
+  const { rows: routes, load: loadRoutes } = useRoutePlanStore();
+
+  useEffect(() => {
+    void load();
+    void loadRoutes();
+  }, [load, loadRoutes]);
+
+  const routeOf = (routePlanId: number) => routes.find((route) => route.id === routePlanId);
+
+  return { requests, feedback, accept, routeOf };
 }

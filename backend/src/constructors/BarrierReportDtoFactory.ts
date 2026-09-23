@@ -1,1 +1,3 @@
-export const createBarrierReportDto = (overrides = {}) => ({ id: 1, reporter_id: 1, facility_id: 1, barrier_type: "LOW_VISION", description: "description 1", photo_url: "/mock/photo_url-1.png", verify_status: "BLOCKED", priority: "priority 1", ...overrides });
+export const createBarrierReportDto = (overrides = {}) => ({ id: 1, reporter_id: 1, facility_id: 1, barrier_type: "LOW_VISION", description: "description 1", photo_url: "/mock/photo_url-1.png", verify_status: "PENDING", priority: "HIGH", ...overrides });
+
+export const createBarrierReportReviewResultDto = (overrides = {}) => ({ report: null, duplicated: false, affected_routes: [], ...overrides });

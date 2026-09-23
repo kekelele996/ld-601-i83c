@@ -73,8 +73,8 @@ export const mockData = {
       "origin_text": "origin text 1",
       "destination_text": "destination text 1",
       "route_mode": "route mode 1",
-      "risk_level": "LOW",
-      "estimated_minutes": "estimated minutes 1",
+      "risk_level": "HIGH",
+      "estimated_minutes": 25,
       "facility_ids": [
         1,
         2
@@ -87,11 +87,11 @@ export const mockData = {
       "origin_text": "origin text 2",
       "destination_text": "destination text 2",
       "route_mode": "route mode 2",
-      "risk_level": "MEDIUM",
-      "estimated_minutes": "estimated minutes 2",
+      "risk_level": "LOW",
+      "estimated_minutes": 40,
       "facility_ids": [
-        1,
-        2
+        2,
+        3
       ],
       "created_at": "2026-06-12T09:00:00Z"
     },
@@ -101,11 +101,10 @@ export const mockData = {
       "origin_text": "origin text 3",
       "destination_text": "destination text 3",
       "route_mode": "route mode 3",
-      "risk_level": "HIGH",
-      "estimated_minutes": "estimated minutes 3",
+      "risk_level": "LOW",
+      "estimated_minutes": 18,
       "facility_ids": [
-        1,
-        2
+        3
       ],
       "created_at": "2026-06-13T09:00:00Z"
     }
@@ -117,7 +116,7 @@ export const mockData = {
       "route_plan_id": 1,
       "helper_id": 1,
       "request_time": "2026-06-11T09:00:00Z",
-      "status": "BLOCKED",
+      "status": "REQUESTED",
       "meet_point": "meet point 1",
       "contact_note": "contact note 1"
     },
@@ -127,7 +126,7 @@ export const mockData = {
       "route_plan_id": 2,
       "helper_id": 2,
       "request_time": "2026-06-12T09:00:00Z",
-      "status": "MAINTENANCE",
+      "status": "REQUESTED",
       "meet_point": "meet point 2",
       "contact_note": "contact note 2"
     },
@@ -137,7 +136,7 @@ export const mockData = {
       "route_plan_id": 3,
       "helper_id": 3,
       "request_time": "2026-06-13T09:00:00Z",
-      "status": "AVAILABLE",
+      "status": "REQUESTED",
       "meet_point": "meet point 3",
       "contact_note": "contact note 3"
     }
@@ -150,8 +149,8 @@ export const mockData = {
       "barrier_type": "LOW_VISION",
       "description": "description 1",
       "photo_url": "/mock/photo_url-1.png",
-      "verify_status": "BLOCKED",
-      "priority": "priority 1"
+      "verify_status": "VERIFIED",
+      "priority": "HIGH"
     },
     {
       "id": 2,
@@ -160,8 +159,8 @@ export const mockData = {
       "barrier_type": "WHEELCHAIR",
       "description": "description 2",
       "photo_url": "/mock/photo_url-2.png",
-      "verify_status": "MAINTENANCE",
-      "priority": "priority 2"
+      "verify_status": "PENDING",
+      "priority": "MEDIUM"
     },
     {
       "id": 3,
@@ -170,8 +169,8 @@ export const mockData = {
       "barrier_type": "ELDERLY",
       "description": "description 3",
       "photo_url": "/mock/photo_url-3.png",
-      "verify_status": "AVAILABLE",
-      "priority": "priority 3"
+      "verify_status": "CLOSED",
+      "priority": "HIGH"
     }
   ]
 } as const;
