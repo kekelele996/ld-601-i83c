@@ -57,6 +57,15 @@ backend/src/routes, controllers, services, models, repositories, middlewares, co
 - MobilityType: constants/MobilityType、types/MobilityType、constructors、logTemplates、errorMessages、筛选器、展示组件/控制器均有引用。
 - FacilityStatus: constants/FacilityStatus、types/FacilityStatus、constructors、logTemplates、errorMessages、筛选器、展示组件/控制器均有引用。
 - AssistanceStatus: constants/AssistanceStatus、types/AssistanceStatus、constructors、logTemplates、errorMessages、筛选器、展示组件/控制器均有引用。
+- BarrierVerifyStatus（PENDING/VERIFIED/CLOSED/REJECTED）: 前后端 constants/BarrierVerifyStatus、statusText、models/BarrierReport、BarrierReportService、ReportsPage。
+- BarrierPriority（HIGH/MEDIUM/LOW）: 前后端 constants/BarrierPriority、statusText、models/BarrierReport、RoutePlanService（仅高优先级阻断路线）、ReportsPage、RoutesPage。
+- RouteRiskLevel（LOW/MEDIUM/HIGH）: backend constants/RouteRiskLevel、models/RoutePlan、RoutePlanService、utils/formatters 的 formatRisk、RoutesPage。
+
+## 障碍审核 → 路线风险 → 协助接单联动
+
+- `POST /api/barrier-report/:id/review`，body `{"action":"verify"|"close"}`：巡检员核实/关闭障碍后，关联路线（facility_ids 命中）风险立即重算；存在未关闭的高优先级已核实障碍时路线为 HIGH，否则恢复 LOW。重复提交同一处理结果返回 `changed:false`，不重复影响路线。
+- `POST /api/assistance-request/:id/accept`，body `{"helper_id":2}`：路线存在未关闭高优先级障碍时返回 `409 ROUTE_BLOCKED_BY_BARRIER`，待接单请求保留；同一调度员重复接单幂等返回现状。
+- `GET /api/route-plan/:id/risk-flow`：查询某条路线的联动视图——关联障碍工单、未关闭阻断项、协助请求接单可行性与完整流转事件。
 
 ## 为什么会牵一发动全身
 

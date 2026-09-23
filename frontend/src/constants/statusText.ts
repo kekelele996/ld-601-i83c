@@ -1,9 +1,13 @@
 import { MobilityTypeText } from "./MobilityType";
 import { FacilityStatusText } from "./FacilityStatus";
 import { AssistanceStatusText } from "./AssistanceStatus";
+import { BarrierVerifyStatusText } from "./BarrierVerifyStatus";
+import { BarrierPriorityText } from "./BarrierPriority";
 
 export const STATUS_TEXT = {
   MobilityType: MobilityTypeText,
   FacilityStatus: FacilityStatusText,
-  AssistanceStatus: AssistanceStatusText
+  AssistanceStatus: AssistanceStatusText,
+  BarrierVerifyStatus: BarrierVerifyStatusText,
+  BarrierPriority: BarrierPriorityText
 };

@@ -4,6 +4,9 @@ import { routes } from "./router/routes";
 import { mockData } from "./mocks/seedData";
 import { StatusBadge } from "./components/common/StatusBadge";
 import { StatCard } from "./components/common/StatCard";
+import { RoutesPage } from "./pages/RoutesPage";
+import { AssistancePage } from "./pages/AssistancePage";
+import { ReportsPage } from "./pages/ReportsPage";
 import "./styles.css";
 
 function Page({ name }: { name: string }) {
@@ -39,15 +42,35 @@ function Page({ name }: { name: string }) {
   </main>;
 }
 
+const pageMap: Record<string, () => React.JSX.Element> = {
+  "/routes": RoutesPage,
+  "/assistance": AssistancePage,
+  "/reports": ReportsPage
+};
+
 function App() {
   const [active, setActive] = useState<string>(routes[0]?.route ?? "/dashboard");
   const current = routes.find((route) => route.route === active) ?? routes[0];
+  const ActivePage = pageMap[current?.route ?? ""];
   return <div className="shell">
     <aside>
       <div className="brand">无障碍出行协助平台</div>
       <nav>{routes.map((route) => <button key={route.route} className={active === route.route ? "active" : ""} onClick={() => setActive(route.route)}>{route.name}</button>)}</nav>
     </aside>
-    <Page name={current?.name ?? "工作台"} />
+    {ActivePage ? (
+      <main className="page">
+        <section className="page-head">
+          <div>
+            <p className="eyebrow">accessroute</p>
+            <h1>{current?.name}</h1>
+          </div>
+          <StatusBadge value="LIVE_API" />
+        </section>
+        <ActivePage />
+      </main>
+    ) : (
+      <Page name={current?.name ?? "工作台"} />
+    )}
   </div>;
 }
 

@@ -1,8 +1,21 @@
-import { useMemo, useState } from "react";
+import { useEffect } from "react";
+import { useRoutePlanStore } from "../stores/RoutePlanStore";
 
-export function useRouteRisk<T>(rows: T[] = []) {
-  const [page, setPage] = useState(1);
-  const pageSize = 8;
-  const pageRows = useMemo(() => rows.slice((page - 1) * pageSize, page * pageSize), [rows, page]);
-  return { page, setPage, pageSize, pageRows, total: rows.length };
+// 选中路线后加载「障碍审核 -> 路线风险 -> 协助接单」联动视图。
+export function useRouteRisk(routeId: number | null) {
+  const { riskFlow, riskFlowLoading, loadRiskFlow, clearRiskFlow } = useRoutePlanStore();
+
+  useEffect(() => {
+    if (routeId == null) {
+      clearRiskFlow();
+      return;
+    }
+    void loadRiskFlow(routeId);
+  }, [routeId, loadRiskFlow, clearRiskFlow]);
+
+  return {
+    flow: routeId == null ? null : riskFlow,
+    loading: riskFlowLoading,
+    refresh: () => (routeId == null ? Promise.resolve() : loadRiskFlow(routeId))
+  };
 }

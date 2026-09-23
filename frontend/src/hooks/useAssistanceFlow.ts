@@ -1,8 +1,16 @@
-import { useMemo, useState } from "react";
+import { useAssistanceRequestStore } from "../stores/AssistanceRequestStore";
 
-export function useAssistanceFlow<T>(rows: T[] = []) {
-  const [page, setPage] = useState(1);
-  const pageSize = 8;
-  const pageRows = useMemo(() => rows.slice((page - 1) * pageSize, page * pageSize), [rows, page]);
-  return { page, setPage, pageSize, pageRows, total: rows.length };
+// 调度员接单动作：被拒绝时（如障碍未关闭）暴露错误信息。
+export function useAssistanceFlow(helperId: number) {
+  const { rows, loading, accepting, lastError, load, accept, clearError } = useAssistanceRequestStore();
+
+  return {
+    rows,
+    loading,
+    accepting,
+    error: lastError,
+    load,
+    accept: (id: number) => accept(id, helperId),
+    clearError
+  };
 }

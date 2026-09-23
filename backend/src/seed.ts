@@ -1,4 +1,16 @@
-export const seed = {
+import type { UserProfile } from "./models/UserProfile";
+import type { AccessibleFacility } from "./models/AccessibleFacility";
+import type { RoutePlan } from "./models/RoutePlan";
+import type { AssistanceRequest } from "./models/AssistanceRequest";
+import type { BarrierReport } from "./models/BarrierReport";
+
+export const seed: {
+  userProfile: UserProfile[];
+  accessibleFacility: AccessibleFacility[];
+  routePlan: RoutePlan[];
+  assistanceRequest: AssistanceRequest[];
+  barrierReport: BarrierReport[];
+} = {
   "userProfile": [
     {
       "id": 1,
@@ -34,7 +46,7 @@ export const seed = {
   "accessibleFacility": [
     {
       "id": 1,
-      "facility_type": "LOW_VISION",
+      "facility_type": "ELEVATOR",
       "name": "name 1",
       "location_code": "location code 1",
       "floor": "floor 1",
@@ -45,7 +57,7 @@ export const seed = {
     },
     {
       "id": 2,
-      "facility_type": "WHEELCHAIR",
+      "facility_type": "RAMP",
       "name": "name 2",
       "location_code": "location code 2",
       "floor": "floor 2",
@@ -56,7 +68,7 @@ export const seed = {
     },
     {
       "id": 3,
-      "facility_type": "ELDERLY",
+      "facility_type": "TACTILE_PAVING",
       "name": "name 3",
       "location_code": "location code 3",
       "floor": "floor 3",
@@ -73,8 +85,8 @@ export const seed = {
       "origin_text": "origin text 1",
       "destination_text": "destination text 1",
       "route_mode": "route mode 1",
-      "risk_level": "LOW",
-      "estimated_minutes": "estimated minutes 1",
+      "risk_level": "HIGH",
+      "estimated_minutes": 12,
       "facility_ids": [
         1,
         2
@@ -87,11 +99,11 @@ export const seed = {
       "origin_text": "origin text 2",
       "destination_text": "destination text 2",
       "route_mode": "route mode 2",
-      "risk_level": "MEDIUM",
-      "estimated_minutes": "estimated minutes 2",
+      "risk_level": "LOW",
+      "estimated_minutes": 18,
       "facility_ids": [
-        1,
-        2
+        2,
+        3
       ],
       "created_at": "2026-06-12T09:00:00Z"
     },
@@ -101,11 +113,10 @@ export const seed = {
       "origin_text": "origin text 3",
       "destination_text": "destination text 3",
       "route_mode": "route mode 3",
-      "risk_level": "HIGH",
-      "estimated_minutes": "estimated minutes 3",
+      "risk_level": "LOW",
+      "estimated_minutes": 9,
       "facility_ids": [
-        1,
-        2
+        3
       ],
       "created_at": "2026-06-13T09:00:00Z"
     }
@@ -115,9 +126,9 @@ export const seed = {
       "id": 1,
       "user_id": 1,
       "route_plan_id": 1,
-      "helper_id": 1,
+      "helper_id": 0,
       "request_time": "2026-06-11T09:00:00Z",
-      "status": "BLOCKED",
+      "status": "REQUESTED",
       "meet_point": "meet point 1",
       "contact_note": "contact note 1"
     },
@@ -125,9 +136,9 @@ export const seed = {
       "id": 2,
       "user_id": 2,
       "route_plan_id": 2,
-      "helper_id": 2,
+      "helper_id": 0,
       "request_time": "2026-06-12T09:00:00Z",
-      "status": "MAINTENANCE",
+      "status": "REQUESTED",
       "meet_point": "meet point 2",
       "contact_note": "contact note 2"
     },
@@ -135,9 +146,9 @@ export const seed = {
       "id": 3,
       "user_id": 3,
       "route_plan_id": 3,
-      "helper_id": 3,
+      "helper_id": 2,
       "request_time": "2026-06-13T09:00:00Z",
-      "status": "AVAILABLE",
+      "status": "COMPLETED",
       "meet_point": "meet point 3",
       "contact_note": "contact note 3"
     }
@@ -147,31 +158,31 @@ export const seed = {
       "id": 1,
       "reporter_id": 1,
       "facility_id": 1,
-      "barrier_type": "LOW_VISION",
+      "barrier_type": "ELEVATOR_OUT_OF_SERVICE",
       "description": "description 1",
       "photo_url": "/mock/photo_url-1.png",
-      "verify_status": "BLOCKED",
-      "priority": "priority 1"
+      "verify_status": "VERIFIED",
+      "priority": "HIGH"
     },
     {
       "id": 2,
       "reporter_id": 2,
       "facility_id": 2,
-      "barrier_type": "WHEELCHAIR",
+      "barrier_type": "RAMP_BLOCKED",
       "description": "description 2",
       "photo_url": "/mock/photo_url-2.png",
-      "verify_status": "MAINTENANCE",
-      "priority": "priority 2"
+      "verify_status": "PENDING",
+      "priority": "HIGH"
     },
     {
       "id": 3,
       "reporter_id": 3,
       "facility_id": 3,
-      "barrier_type": "ELDERLY",
+      "barrier_type": "TACTILE_PAVING_DAMAGED",
       "description": "description 3",
       "photo_url": "/mock/photo_url-3.png",
-      "verify_status": "AVAILABLE",
-      "priority": "priority 3"
+      "verify_status": "VERIFIED",
+      "priority": "LOW"
     }
   ]
-} as const;
+};
